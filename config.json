@@ -1,0 +1,99 @@
+{
+    "project_name": "Neuromorphic",
+"seizure_csv": "C:\\Users\\JumanAlHashmi\\training\\Modifing Workflow\\modified workflow\\nexa-neuromorphic-training-workflow-main\\seizure.csv",
+    "preprocessing": {
+        "bandpass_filters": {
+            "high_pass": 40,
+            "low_pass": 1
+        },
+        "segments": [
+            {
+                "duration": 3600,
+                "name": "preictal"
+            },
+            {
+                "duration": 3600,
+                "name": "interictal"
+            },
+            {
+                "duration": 10800,
+                "name": "x"
+            }
+        ],
+        "chosen_stimulation_type": "bipolar",
+        "channel_pairs": [
+            {
+                "type": "bipolar",
+                "bipolar_pairs": [
+                    [
+                        "F8, EEG",
+                        "T4, EEG"
+                    ],
+                    [
+                        "F7, EEG",
+                        "T3, EEG"
+                    ]
+                ]
+            },
+            {
+                "type": "monopolar",
+                "reference": "T3, EEG",
+                "monopolar_pairs": [
+                    [
+                        "F8, EEG",
+                        "F7, EEG"
+                    ]
+                ]
+            }
+        ],
+        "scaling_factor": "1e6",
+        "chosen_normalization": "minmax",
+        "normalization": [
+            {
+                "type": "minmax",
+                "global_max_value": 50,
+                "global_min_value": -50
+            },
+            {
+                "type": "zscore"
+            },
+            {
+                "type": "robust"
+            }
+        ],
+        "sampling_duration": 3,
+        "transformation_method": "stft",
+        "stft": {
+            "overlap_size": 102,
+            "sampling_frequency": 256,
+            "window_length": 128,
+            "3rd_stacking_stft_method": "magnitude"
+        },
+        "wavelet": {
+            "wavelet_shape": "db4",
+            "level_of_wavelet": 4,
+            "3rd_stacking_wavelet_method": "magnitude"
+        }
+    },
+    "training": {
+        "model": {
+            "K_Fold_Cross_validation": true,
+            "num_of_K_folds" : 5,
+            "batch_size": 32,
+            "epochs": 100,
+            "learning_rate": 0.001,
+            "validating_testing_training_ratio": "10/10/80"
+        }
+    },
+    "post_processing": {
+        "quantization_and_conversion": {
+            "validating_testing_training_ratio": "10/10/80",
+            "epochs": 1,
+            "learning_rate": 0.0001,
+            "finetune": true
+        }
+    },
+    "settings": {
+        "save_csv_files": true
+    }
+}

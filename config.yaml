@@ -1,0 +1,73 @@
+project_name: Neuromorphic
+seizure_csv: EDFs\seizure.csv
+
+preprocessing:
+
+  bandpass_filters:
+    high_pass: 49
+    low_pass: 1
+
+  segments:
+    - duration: 3600        # in seconds
+      name: preictal  
+    - duration: 3600
+      name: interictal
+    - duration: 10800
+      name: x
+
+  chosen_stimulation_type: bipolar
+  channel_pairs:
+    - type: bipolar
+      bipolar_pairs:
+        - - F8, EEG
+          - T4, EEG
+        - - F7, EEG
+          - T3, EEG
+          
+    - type: monopolar
+      reference: T3, EEG
+      monopolar_pairs:
+        - - F8, EEG
+          - F7, EEG
+  scaling_factor: 1e6
+          
+  chosen_normalization: minmax
+  normalization:
+    - type: minmax
+      global_max_value: 50
+      global_min_value: -50
+    - type: zscore
+    - type: robust
+
+  sampling_duration: 10     #  In seconds
+
+  transformation_method: stft     #stft, wavelet
+
+  stft:
+    overlap_size: 102
+    sampling_frequency: 256
+    window_length: 128
+    3rd_stacking_stft_method: magnitude        # magnitude, phase_difference, absolute_difference
+
+  wavelet:
+    wavelet_shape: db4           # shape of wavelet
+    level_of_wavelet: 4
+    3rd_stacking_wavelet_method: magnitude        # magnitude, phase_difference, absolute_difference
+
+
+training:
+  model:
+    batch_size: 32
+    epochs: 1
+    starting_learning_rate: 0.001      
+    validating_testing_training_ratio: 10/10/80     # validation/test/training
+
+post_processing:
+  quantization_and_conversion:
+    validating_testing_training_ratio: 10/10/80     # validation/test/training
+    epochs: 1
+    starting_learning_rate: 0.0001 # starting_lr
+    finetune: True
+
+settings:
+  save_csv_files: True

@@ -1,0 +1,17 @@
+numpy
+pandas
+scipy
+os
+itertools
+multiprocessing
+PyWavelets
+mne
+random
+tensorflow
+cnn2snn
+keras
+matplotlib
+sklearn
+seaborn
+
+

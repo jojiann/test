@@ -1,0 +1,13 @@
+EDFs
+experiments
+venv3.10
+test*
+CHBMIT_organized_raw
+wavelets
+CHBMIT_organized_raw.zip
+*.fbz
+*.keras
+*.h5
+build
+dist
+nexa.egg-info
